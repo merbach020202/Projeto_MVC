@@ -8,7 +8,7 @@ namespace Console_MVC.Model
         public float Preco { get; set; }
 
         //caminho da pasta e do arquivo definido    
-        private const string PATH = "Database/Produto.csv";         //constante é um valor que não varia, ou seja, não é uma variável
+        private const string PATH = "Database/Produto.csv";   //const (constante) é um valor que não varia, ou seja, não é uma variável
     
         //criar um construtor
         public Produto()
@@ -61,8 +61,22 @@ namespace Console_MVC.Model
                 //adicionaos objetos dentro da lista
                 produtos.Add(p);
             }
-            
+            //retorna a lista de produtos
             return produtos;
         }    
+
+        //método para preparar a linha do csv
+        public string PrepararLinhasCSV( Produto p )
+        {
+            return $"{p.Codigo};{p.Nome};{p.Preco}";
+        }
+
+        //método para inserir um produto no arquivo csv
+        public void Inserir( Produto p )
+        {
+            string[] linhas = {PrepararLinhasCSV(p)};
+
+            File.AppendAllLines(PATH, linhas);
+        }
     }
 }
